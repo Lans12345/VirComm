@@ -37,7 +37,7 @@ Widget doctor(String path, String name, String type) {
               ),
             ),
             height: 180,
-            width: 150,
+            width: 130,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

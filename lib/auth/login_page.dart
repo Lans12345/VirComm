@@ -15,8 +15,12 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            image('assets/images/logowithtext.png', 250, 250, EdgeInsets.zero,
-                ''),
+            image(
+              'assets/images/logowithtext.png',
+              250,
+              250,
+              EdgeInsets.zero,
+            ),
             const SizedBox(
               height: 100,
             ),
@@ -35,8 +39,12 @@ class LoginPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      image('assets/images/anonymous.png', 25, 25,
-                          EdgeInsets.zero, ''),
+                      image(
+                        'assets/images/anonymous.png',
+                        25,
+                        25,
+                        EdgeInsets.zero,
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
@@ -68,8 +76,12 @@ class LoginPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      image('assets/images/fblogo.png', 25, 25, EdgeInsets.zero,
-                          ''),
+                      image(
+                        'assets/images/fblogo.png',
+                        25,
+                        25,
+                        EdgeInsets.zero,
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
@@ -97,8 +109,12 @@ class LoginPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      image('assets/images/googlelogo.png', 25, 25,
-                          EdgeInsets.zero, ''),
+                      image(
+                        'assets/images/googlelogo.png',
+                        25,
+                        25,
+                        EdgeInsets.zero,
+                      ),
                       const SizedBox(
                         width: 15,
                       ),

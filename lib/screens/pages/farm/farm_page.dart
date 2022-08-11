@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:new_app/widgets/dialog.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
@@ -57,11 +58,20 @@ class _FarmPageState extends State<FarmPage> {
       imageFile = File(pickedImage.path);
 
       try {
-        Get.snackbar(
-          'Loading. . .',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => const Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: AlertDialog(
+                title: Text(
+              '         Loading . . .',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Quicksand'),
+            )),
+          ),
         );
 
         await firebase_storage.FirebaseStorage.instance
@@ -75,12 +85,7 @@ class _FarmPageState extends State<FarmPage> {
           pic = 'Uploaded Succesfully';
         });
 
-        Get.snackbar(
-          'Upload Succesfully!',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-        );
+        Navigator.of(context).pop();
       } on firebase_storage.FirebaseException catch (error) {
         if (kDebugMode) {
           print(error);
@@ -104,10 +109,25 @@ class _FarmPageState extends State<FarmPage> {
             backgroundColor: Colors.green,
             title: text('Farm & Market', 22, Colors.white),
             centerTitle: true,
-            automaticallyImplyLeading: false,
             bottom: TabBar(indicatorColor: Colors.white, tabs: [
-              text('Farm', 18, Colors.white),
-              text('Market', 18, Colors.white),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.landscape_rounded),
+                  const SizedBox(height: 5),
+                  text('Farm', 14, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.store),
+                  const SizedBox(height: 5),
+                  text('Market', 14, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ]),
           ),
           body: TabBarView(children: [
@@ -280,7 +300,7 @@ class _FarmPageState extends State<FarmPage> {
 
                           final data = snapshot.requireData;
                           return SizedBox(
-                            height: 400,
+                            height: 500,
                             child: GridView.builder(
                               itemCount: snapshot.data?.size ?? 0,
                               gridDelegate:
@@ -512,13 +532,7 @@ class _FarmPageState extends State<FarmPage> {
                               onPressed: () {
                                 postProduct(productName, price, name,
                                     contactNumber, imageURL);
-                                Get.snackbar(
-                                  'Upload Succesfully!',
-                                  '',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.white,
-                                );
-                                Get.off(() => const FarmPage());
+                                dialogHome();
                               },
                               child: Padding(
                                 padding:

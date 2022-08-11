@@ -23,7 +23,6 @@ class _RescuePageState extends State<RescuePage> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        automaticallyImplyLeading: false,
         title: text('Rescue Station', 24, Colors.white),
         centerTitle: true,
       ),
@@ -61,7 +60,7 @@ class _RescuePageState extends State<RescuePage> {
             GestureDetector(
               onTap: () async {
                 String driverContactNumber = '09090104355';
-                final _text = 'sms:$driverContactNumber';
+                final _text = 'tel:$driverContactNumber';
                 if (await canLaunch(_text)) {
                   await launch(_text);
                 }

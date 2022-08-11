@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:new_app/widgets/image.dart';
 import 'package:new_app/widgets/text.dart';
 
-Widget modalChild(String imagepath, String name, String features, Widget w) {
+Widget modalChild(
+    String imagepath, String name, String features, Widget w, Color color) {
   return SizedBox(
     height: 500,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        image(
-            imagepath, 175, 175, const EdgeInsets.fromLTRB(0, 0, 0, 0), 'Gym'),
+        image(imagepath, 175, 175, const EdgeInsets.fromLTRB(0, 0, 0, 0)),
         const SizedBox(
           height: 10,
         ),
@@ -33,7 +33,7 @@ Widget modalChild(String imagepath, String name, String features, Widget w) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          color: Colors.green,
+          color: color,
           onPressed: () {
             Get.off(() => w, transition: Transition.zoom);
           },

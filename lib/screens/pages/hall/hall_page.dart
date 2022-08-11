@@ -5,13 +5,16 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_app/services/cloud_function/postEvent.dart';
 import 'package:new_app/services/cloud_function/postSkill.dart';
+import 'package:new_app/widgets/dialog.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 
 import 'package:new_app/widgets/image.dart';
 import 'package:new_app/widgets/text.dart';
-import 'package:get/get.dart';
+
+import '../../../services/cloud_function/postAnnouncements.dart';
+import '../../../services/cloud_function/postJobOffer.dart';
 
 class HallPage extends StatefulWidget {
   const HallPage({Key? key}) : super(key: key);
@@ -24,9 +27,22 @@ class _FarmPageState extends State<HallPage> {
   late int chipValue = 0;
   late bool s1 = true;
   late bool s2 = false;
+
+  late bool s3 = true;
+  late bool s4 = false;
   late String link = '';
 
+  late int chipValue1 = 0;
+
   late String pic = 'Upload Picture';
+
+  late bool s5 = true;
+  late bool s6 = false;
+  late int chipValue2 = 0;
+
+  late bool s7 = true;
+  late bool s8 = false;
+  late int chipValue3 = 0;
 
   // Event
 
@@ -51,6 +67,8 @@ class _FarmPageState extends State<HallPage> {
 
   late String imageURL = '';
 
+  late String details = '';
+
   Future<void> _uploadWork(String inputSource) async {
     final picker = ImagePicker();
     XFile pickedImage;
@@ -65,11 +83,20 @@ class _FarmPageState extends State<HallPage> {
       imageFile = File(pickedImage.path);
 
       try {
-        Get.snackbar(
-          'Loading. . .',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => const Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: AlertDialog(
+                title: Text(
+              '         Loading . . .',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Quicksand'),
+            )),
+          ),
         );
 
         await firebase_storage.FirebaseStorage.instance
@@ -83,12 +110,7 @@ class _FarmPageState extends State<HallPage> {
           pic = 'Uploaded Succesfully';
         });
 
-        Get.snackbar(
-          'Upload Succesfully!',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-        );
+        Navigator.of(context).pop();
       } on firebase_storage.FirebaseException catch (error) {
         if (kDebugMode) {
           print(error);
@@ -115,11 +137,20 @@ class _FarmPageState extends State<HallPage> {
       imageFile = File(pickedImage.path);
 
       try {
-        Get.snackbar(
-          'Loading. . .',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => const Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: AlertDialog(
+                title: Text(
+              '         Loading . . .',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Quicksand'),
+            )),
+          ),
         );
 
         await firebase_storage.FirebaseStorage.instance
@@ -133,12 +164,7 @@ class _FarmPageState extends State<HallPage> {
           pic = 'Uploaded Succesfully';
         });
 
-        Get.snackbar(
-          'Upload Succesfully!',
-          '',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-        );
+        Navigator.of(context).pop();
       } on firebase_storage.FirebaseException catch (error) {
         if (kDebugMode) {
           print(error);
@@ -154,7 +180,7 @@ class _FarmPageState extends State<HallPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 4,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.grey[200],
@@ -162,10 +188,43 @@ class _FarmPageState extends State<HallPage> {
             backgroundColor: Colors.amber,
             title: text('Municipal Hall', 22, Colors.white),
             centerTitle: true,
-            automaticallyImplyLeading: false,
             bottom: TabBar(indicatorColor: Colors.white, tabs: [
-              text('Events', 18, Colors.white),
-              text('Workers', 18, Colors.white),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.event),
+                  const SizedBox(height: 5),
+                  text('Events', 12, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.announcement),
+                  const SizedBox(height: 5),
+                  text('Announcements', 8, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.person),
+                  const SizedBox(height: 5),
+                  text('Workers', 12, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.work),
+                  const SizedBox(height: 5),
+                  text('Job Offers', 12, Colors.white),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ]),
           ),
           body: TabBarView(children: [
@@ -251,7 +310,7 @@ class _FarmPageState extends State<HallPage> {
 
                           final data = snapshot.requireData;
                           return SizedBox(
-                              height: 400,
+                              height: 500,
                               child: Center(
                                 child: GridView.builder(
                                   itemCount: snapshot.data?.size ?? 0,
@@ -272,7 +331,7 @@ class _FarmPageState extends State<HallPage> {
                                                   topRight: Radius.circular(5)),
                                             ),
                                             height: 200,
-                                            width: 250,
+                                            width: 300,
                                             child: imageOnline(
                                                 data.docs[index]
                                                     ['eventPicture'],
@@ -296,7 +355,7 @@ class _FarmPageState extends State<HallPage> {
                                                       Radius.circular(5)),
                                             ),
                                             height: 100,
-                                            width: 250,
+                                            width: 300,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -493,13 +552,249 @@ class _FarmPageState extends State<HallPage> {
                               onPressed: () {
                                 postMyEvent(eventName, time, location,
                                     participants, eventPicture);
-                                Get.snackbar(
-                                  'Upload Succesfully!',
-                                  '',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.white,
-                                );
-                                Get.off(() => const HallPage());
+                                dialogHome();
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 50, right: 50),
+                                child: text('Post', 12, Colors.white),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 250,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: SizedBox(
+                    height: 40,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: ChoiceChip(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              onSelected: (value) {
+                                setState(() {
+                                  s5 = value;
+                                  chipValue2 = 0;
+                                  s6 = false;
+                                });
+                              },
+                              selectedColor: Colors.amber[200],
+                              disabledColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              label: text('Announcements', 12, Colors.black),
+                              selected: s5),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: ChoiceChip(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              onSelected: (value) {
+                                setState(() {
+                                  s6 = value;
+                                  chipValue2 = 1;
+                                  s5 = false;
+                                });
+                              },
+                              selectedColor: Colors.amber[200],
+                              disabledColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              label:
+                                  text('Post Announcement', 12, Colors.black),
+                              selected: s6),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                IndexedStack(
+                  index: chipValue2,
+                  children: [
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Announcements')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            print('error');
+                            return const Center(child: Text('Error'));
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            print('waiting');
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 50),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.amber,
+                              )),
+                            );
+                          }
+
+                          final data = snapshot.requireData;
+                          return SizedBox(
+                              height: 500,
+                              child: Center(
+                                child: GridView.builder(
+                                  itemCount: snapshot.data?.size ?? 0,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 1),
+                                  itemBuilder: ((context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 10,
+                                          bottom: 10),
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5),
+                                              bottomRight: Radius.circular(5)),
+                                        ),
+                                        height: 250,
+                                        width: 300,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  text(data.docs[index]['time'],
+                                                      16, Colors.white),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 50,
+                                            ),
+                                            Center(
+                                              child: SizedBox(
+                                                width: 220,
+                                                child: text(
+                                                    data.docs[index]['details'],
+                                                    16,
+                                                    Colors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ));
+                        }),
+                    SizedBox(
+                      height: 450,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+                              child: TextFormField(
+                                maxLines: 6,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Quicksand'),
+                                onChanged: (_input) {
+                                  details = _input;
+                                },
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.amber),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  labelText: 'Details',
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    color: Colors.black,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(80, 5, 80, 5),
+                              child: TextFormField(
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Quicksand'),
+                                onChanged: (_input) {
+                                  time = _input;
+                                },
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.amber),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  labelText: 'Date and Time',
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    color: Colors.black,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              color: Colors.amber,
+                              onPressed: () {
+                                postAnnouncements(details, time);
+                                dialogHome();
                               },
                               child: Padding(
                                 padding:
@@ -537,16 +832,16 @@ class _FarmPageState extends State<HallPage> {
                                   const EdgeInsets.only(left: 20, right: 20),
                               onSelected: (value) {
                                 setState(() {
-                                  s1 = value;
-                                  chipValue = 0;
-                                  s2 = false;
+                                  s3 = value;
+                                  chipValue1 = 0;
+                                  s4 = false;
                                 });
                               },
                               selectedColor: Colors.amber[200],
                               disabledColor: Colors.white,
                               backgroundColor: Colors.white,
                               label: text('Skilled Workers', 12, Colors.black),
-                              selected: s1),
+                              selected: s3),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5, right: 5),
@@ -555,16 +850,16 @@ class _FarmPageState extends State<HallPage> {
                                   const EdgeInsets.only(left: 20, right: 20),
                               onSelected: (value) {
                                 setState(() {
-                                  s2 = value;
-                                  chipValue = 1;
-                                  s1 = false;
+                                  s4 = value;
+                                  chipValue1 = 1;
+                                  s3 = false;
                                 });
                               },
                               selectedColor: Colors.amber[200],
                               disabledColor: Colors.white,
                               backgroundColor: Colors.white,
                               label: text('Write Post', 12, Colors.black),
-                              selected: s2),
+                              selected: s4),
                         ),
                       ],
                     ),
@@ -574,7 +869,7 @@ class _FarmPageState extends State<HallPage> {
                   height: 10,
                 ),
                 IndexedStack(
-                  index: chipValue,
+                  index: chipValue1,
                   children: [
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
@@ -790,13 +1085,278 @@ class _FarmPageState extends State<HallPage> {
                               color: Colors.amber,
                               onPressed: () {
                                 postSkill(name, contactNumber, picture, job);
-                                Get.snackbar(
-                                  'Upload Succesfully!',
-                                  '',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.white,
+                                dialogHome();
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 50, right: 50),
+                                child: text('Post', 12, Colors.white),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 250,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: SizedBox(
+                    height: 40,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: ChoiceChip(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              onSelected: (value) {
+                                setState(() {
+                                  s7 = value;
+                                  chipValue3 = 0;
+                                  s8 = false;
+                                });
+                              },
+                              selectedColor: Colors.amber[200],
+                              disabledColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              label: text('Job Offers', 12, Colors.black),
+                              selected: s7),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: ChoiceChip(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              onSelected: (value) {
+                                setState(() {
+                                  s8 = value;
+                                  chipValue3 = 1;
+                                  s7 = false;
+                                });
+                              },
+                              selectedColor: Colors.amber[200],
+                              disabledColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              label: text('Post Offer', 12, Colors.black),
+                              selected: s8),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                IndexedStack(
+                  index: chipValue3,
+                  children: [
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Job Offer')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            print('error');
+                            return const Center(child: Text('Error'));
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            print('waiting');
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 50),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.amber,
+                              )),
+                            );
+                          }
+
+                          final data = snapshot.requireData;
+                          return SizedBox(
+                            height: 400,
+                            child: GridView.builder(
+                              itemCount: snapshot.data?.size ?? 0,
+                              itemBuilder: ((context, index) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            topRight: Radius.circular(5)),
+                                      ),
+                                      height: 110,
+                                      width: 150,
+                                      child: Center(
+                                        child: text(data.docs[index]['job'], 16,
+                                            Colors.amber),
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(5),
+                                            bottomRight: Radius.circular(5)),
+                                      ),
+                                      height: 60,
+                                      width: 150,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          text(data.docs[index]['name'], 18,
+                                              Colors.white),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          text(
+                                              data.docs[index]['contactNumber'],
+                                              12,
+                                              Colors.white),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 );
-                                Get.off(() => const HallPage());
+                              }),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                            ),
+                          );
+                        }),
+                    SizedBox(
+                      height: 450,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(80, 20, 80, 5),
+                              child: TextFormField(
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Quicksand'),
+                                onChanged: (_input) {
+                                  job = _input;
+                                },
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.amber),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  labelText: 'Type of Job/Skill',
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    color: Colors.black,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(80, 20, 80, 5),
+                              child: TextFormField(
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Quicksand'),
+                                onChanged: (_input) {
+                                  name = _input;
+                                },
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.amber),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  labelText: 'Name of Hiring Company/Logistics',
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    color: Colors.black,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(100, 5, 100, 5),
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                maxLength: 9,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Quicksand'),
+                                onChanged: (_input) {
+                                  contactNumber = _input;
+                                },
+                                decoration: InputDecoration(
+                                  prefix: const Text('+639'),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.amber),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  labelText: 'Contact Details',
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    color: Colors.black,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              color: Colors.amber,
+                              onPressed: () {
+                                postJobOffer(name, contactNumber, job);
+                                dialogHome();
                               },
                               child: Padding(
                                 padding:

@@ -15,7 +15,6 @@ class PolicePage extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        automaticallyImplyLeading: false,
         title: text('Police Station', 24, Colors.white),
         centerTitle: true,
       ),
@@ -123,7 +122,7 @@ class PolicePage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   String driverContactNumber = '09090104355';
-                  final _text = 'sms:$driverContactNumber';
+                  final _text = 'tel:$driverContactNumber';
                   if (await canLaunch(_text)) {
                     await launch(_text);
                   }

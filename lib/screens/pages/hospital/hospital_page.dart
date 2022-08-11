@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/screens/pages/hospital/pages/dietitian/dietitian.dart';
+import 'package:new_app/screens/pages/hospital/pages/doctor/consultation_page.dart';
+import 'package:new_app/screens/pages/hospital/pages/psychiatrist/psychiatrist_page.dart';
+import 'package:new_app/screens/pages/hospital/pages/xray/brain_page.dart';
+import 'package:new_app/screens/pages/hospital/pages/xray/breast_page.dart';
+import 'package:new_app/screens/pages/hospital/pages/xray/covid_page.dart';
 import 'package:new_app/screens/pages/hospital/specific_widgets/xrayContainer.dart';
-
+import 'package:get/get.dart';
 import 'package:new_app/widgets/container.dart';
 import 'package:new_app/widgets/text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'specific_widgets/doctor.dart';
 
@@ -22,6 +29,11 @@ class _HospitalPageState extends State<HospitalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: text('Hospital', 22, Colors.white),
+        centerTitle: true,
+      ),
       backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Padding(
@@ -47,7 +59,13 @@ class _HospitalPageState extends State<HospitalPage> {
                       color: Colors.blue,
                     ),
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          String driverContactNumber = '09090104355';
+                          final _text = 'tel:$driverContactNumber';
+                          if (await canLaunch(_text)) {
+                            await launch(_text);
+                          }
+                        },
                         icon: const Icon(
                           Icons.power_settings_new_rounded,
                           color: Colors.white,
@@ -173,7 +191,7 @@ class _HospitalPageState extends State<HospitalPage> {
                           selectedColor: Colors.blue[200],
                           disabledColor: Colors.white,
                           backgroundColor: Colors.white,
-                          label: text('X-Ray', 14, Colors.black),
+                          label: text('Detection', 14, Colors.black),
                           selected: _selected4),
                     ),
                   ],
@@ -185,19 +203,71 @@ class _HospitalPageState extends State<HospitalPage> {
               IndexedStack(
                 index: chipValue,
                 children: [
-                  doctor("assets/images/doctor1.png", 'Dr. Jane', 'Dietitian'),
-                  doctor("assets/images/doctor3.png", 'Dr. May', 'Doctor'),
-                  doctor("assets/images/doctor2.png", 'Dr. Maricel',
-                      'Psychiatrist'),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const DietitianPage(),
+                          transition: Transition.zoom);
+                    },
+                    child: Hero(
+                      tag: 'jane',
+                      child: doctor(
+                          "assets/images/doctor1.png", 'Dr. Jane', 'Dietitian'),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const ConsultationPage(),
+                          transition: Transition.zoom);
+                    },
+                    child: Hero(
+                      tag: 'may',
+                      child: doctor(
+                        "assets/images/doctor3.png",
+                        'Dr. May',
+                        'Doctor',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const DialogflowPsychiatrist(),
+                          transition: Transition.zoom);
+                    },
+                    child: Hero(
+                      tag: 'maricel',
+                      child: doctor("assets/images/doctor2.png", 'Dr. Maricel',
+                          'Psychiatrist'),
+                    ),
+                  ),
                   SizedBox(
                     height: 300,
                     child: GridView.count(
                       crossAxisCount: 2,
                       children: [
-                        xray("assets/images/chest.png",
-                            'Covid 19,\nPneumonia,\nLung Opacity'),
-                        xray("assets/images/brain.jpg", 'Brain\nTumor'),
-                        xray("assets/images/breast.jpg", 'Breast\nCancer'),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => CovidPage(),
+                                transition: Transition.zoom);
+                          },
+                          child: xray("assets/images/chest.png",
+                              'Covid 19,\nPneumonia,\nLung Opacity'),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => BrainPage(),
+                                transition: Transition.zoom);
+                          },
+                          child:
+                              xray("assets/images/brain.jpg", 'Brain\nTumor'),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => BreastPage(),
+                                transition: Transition.zoom);
+                          },
+                          child: xray(
+                              "assets/images/breast.jpg", 'Breast\nCancer'),
+                        ),
                       ],
                     ),
                   )

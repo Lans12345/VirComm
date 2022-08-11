@@ -38,15 +38,17 @@ class Home extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
-                              context: context,
-                              builder: (context) => modalChild(
-                                  'assets/images/gympic.png',
-                                  'Gym',
-                                  'Personalized home workout guide without any equipment',
-                                  const GymPage()));
+                            context: context,
+                            builder: (context) => modalChild(
+                                'assets/images/gympic.png',
+                                'Gym',
+                                'Personalized home workout guide without any equipment',
+                                const GymPage(),
+                                Colors.black),
+                          );
                         },
                         child: image('assets/images/gym.png', 120, 120,
-                            const EdgeInsets.fromLTRB(250, 380, 0, 0), 'Gym'),
+                            const EdgeInsets.fromLTRB(250, 380, 0, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -56,14 +58,11 @@ class Home extends StatelessWidget {
                                   'assets/images/farmpic.png',
                                   'Market & Farm',
                                   'Guide to manage crops, Buy and sell Agricultural Products',
-                                  const FarmPage()));
+                                  const FarmPage(),
+                                  Colors.green));
                         },
-                        child: image(
-                            'assets/images/farm.png',
-                            280,
-                            280,
-                            const EdgeInsets.fromLTRB(100, 130, 0, 0),
-                            'Fire Station'),
+                        child: image('assets/images/farm.png', 280, 280,
+                            const EdgeInsets.fromLTRB(100, 130, 0, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -73,14 +72,11 @@ class Home extends StatelessWidget {
                                   'assets/images/firepic.png',
                                   'Fire Station',
                                   'Tips to avoid Fire, Call for Emergency',
-                                  const FireStationPage()));
+                                  const FireStationPage(),
+                                  Colors.red));
                         },
-                        child: image(
-                            'assets/images/firestation.png',
-                            190,
-                            190,
-                            const EdgeInsets.fromLTRB(200, 5, 0, 0),
-                            'Fire Station'),
+                        child: image('assets/images/firestation.png', 190, 190,
+                            const EdgeInsets.fromLTRB(200, 5, 0, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -89,15 +85,12 @@ class Home extends StatelessWidget {
                               builder: (context) => modalChild(
                                   'assets/images/hallpic.png',
                                   'Municipal Hall',
-                                  'Be notified about the events in your communities, Post freelancing service',
-                                  const HallPage()));
+                                  'Be notified about the events in your \ncommunities, Post freelancing service',
+                                  const HallPage(),
+                                  Colors.amber));
                         },
-                        child: image(
-                            'assets/images/hall.png',
-                            150,
-                            150,
-                            const EdgeInsets.fromLTRB(5, 400, 20, 0),
-                            'Municipal Hall'),
+                        child: image('assets/images/hall.png', 150, 150,
+                            const EdgeInsets.fromLTRB(5, 400, 20, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -107,14 +100,11 @@ class Home extends StatelessWidget {
                                   'assets/images/hospitalpic.png',
                                   'Hospital',
                                   'Doctor, Psychiatrist, Dietitian Consultation and X-Ray',
-                                  HospitalPage()));
+                                  HospitalPage(),
+                                  Colors.blue));
                         },
-                        child: image(
-                            'assets/images/hospital.png',
-                            150,
-                            150,
-                            const EdgeInsets.fromLTRB(0, 100, 0, 0),
-                            'Hospital'),
+                        child: image('assets/images/hospital.png', 150, 150,
+                            const EdgeInsets.fromLTRB(0, 100, 0, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -124,14 +114,11 @@ class Home extends StatelessWidget {
                                   'assets/images/policepic.png',
                                   'Police Station',
                                   'Send Reports, Call for Emergency',
-                                  PolicePage()));
+                                  PolicePage(),
+                                  Colors.blue));
                         },
-                        child: image(
-                            'assets/images/police.png',
-                            180,
-                            180,
-                            const EdgeInsets.fromLTRB(5, 530, 0, 0),
-                            'Police Station'),
+                        child: image('assets/images/police.png', 180, 180,
+                            const EdgeInsets.fromLTRB(5, 530, 0, 0)),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -141,14 +128,11 @@ class Home extends StatelessWidget {
                                   'assets/images/rescuepic.png',
                                   'Rescue Center',
                                   'Evacuation Sites, Call for Emergency',
-                                  const RescuePage()));
+                                  const RescuePage(),
+                                  Colors.brown));
                         },
-                        child: image(
-                            'assets/images/rescye.png',
-                            150,
-                            150,
-                            const EdgeInsets.fromLTRB(235, 500, 0, 0),
-                            'Rescue Center'),
+                        child: image('assets/images/rescye.png', 150, 150,
+                            const EdgeInsets.fromLTRB(235, 500, 0, 0)),
                       ),
                     ],
                   ),

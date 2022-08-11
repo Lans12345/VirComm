@@ -15,7 +15,7 @@ Widget container(String path, String title, String subtitle) {
           borderRadius: BorderRadius.circular(10),
         ),
         height: 150,
-        width: 350,
+        width: 300,
         child: Row(
           children: [
             const SizedBox(

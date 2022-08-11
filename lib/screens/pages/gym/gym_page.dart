@@ -37,7 +37,6 @@ class _GymPageState extends State<GymPage> {
         backgroundColor: Colors.black,
         title: text('Home Workout', 24, Colors.white),
         centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -376,7 +375,7 @@ class _GymPageState extends State<GymPage> {
                         color: Colors.grey[200],
                         onPressed: () {
                           setState(() {
-                            Get.off(() => Home());
+                            Get.off(() => const Home());
                           });
                         },
                         child: Padding(

@@ -17,6 +17,22 @@ Widget image(
   );
 }
 
+Widget image1(
+  String path,
+  double height,
+  double width,
+  EdgeInsets e,
+) {
+  return Padding(
+    padding: e,
+    child: Image(
+        fit: BoxFit.fill,
+        width: width,
+        height: height,
+        image: AssetImage(path)),
+  );
+}
+
 Widget image2(
     String path, double width, double height, String txt, double size) {
   return Stack(children: [

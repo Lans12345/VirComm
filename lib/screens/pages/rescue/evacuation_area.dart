@@ -59,13 +59,13 @@ class MapSampleState extends State<MapSample> {
   }
 
   marker2() async {
-    Marker mark2 = Marker(
-        markerId: const MarkerId('mark2'),
-        infoWindow: const InfoWindow(
+    Marker mark2 = const Marker(
+        markerId: MarkerId('mark2'),
+        infoWindow: InfoWindow(
           title: 'Evacuation Area 1',
         ),
         icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(lat, long));
+        position: LatLng(8.311283, 125.004636));
 
     setState(() {
       markers.add(mark2);
@@ -73,13 +73,13 @@ class MapSampleState extends State<MapSample> {
   }
 
   marker3() async {
-    Marker mark3 = Marker(
-        markerId: const MarkerId('mark3'),
-        infoWindow: const InfoWindow(
+    Marker mark3 = const Marker(
+        markerId: MarkerId('mark3'),
+        infoWindow: InfoWindow(
           title: 'Evacuation Area 2',
         ),
         icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(lat, long));
+        position: LatLng(8.311788, 125.005656));
 
     setState(() {
       markers.add(mark3);

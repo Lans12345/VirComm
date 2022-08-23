@@ -15,7 +15,7 @@ class DialogflowDoctor extends StatelessWidget {
           const WebView(
             javascriptMode: JavascriptMode.unrestricted,
             initialUrl:
-                'https://console.dialogflow.com/api-client/demo/embedded/7f59cc2e-0959-4956-8058-56325c61d078',
+                'https://console.dialogflow.com/api-client/demo/embedded/447e0945-5508-4dd4-993d-7ee480302ea9',
           ),
           Container(
             width: double.infinity,

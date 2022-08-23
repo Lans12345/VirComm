@@ -15,7 +15,7 @@ class DialogflowPsychiatrist extends StatelessWidget {
           const WebView(
             javascriptMode: JavascriptMode.unrestricted,
             initialUrl:
-                'https://console.dialogflow.com/api-client/demo/embedded/7f59cc2e-0959-4956-8058-56325c61d078',
+                'https://console.dialogflow.com/api-client/demo/embedded/74a1abe2-9c52-42bf-8b42-28bf6146c96e',
           ),
           Container(
             width: double.infinity,

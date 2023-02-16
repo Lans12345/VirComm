@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/services/authentication/googleLogin.dart';
+import 'package:new_app/services/authentication/loginAnonymous.dart';
 import 'package:new_app/widgets/image.dart';
 import 'package:new_app/widgets/text.dart';
 
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 color: Colors.white,
                 onPressed: () {
-                  logInWithFacebook();
+                  signIn();
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),

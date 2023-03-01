@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'package:new_app/widgets/image.dart';
 import 'package:new_app/widgets/text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/cloud_function/postAnnouncements.dart';
 import '../../../services/cloud_function/postJobOffer.dart';
@@ -899,54 +900,64 @@ class _FarmPageState extends State<HallPage> {
                             child: GridView.builder(
                               itemCount: snapshot.data?.size ?? 0,
                               itemBuilder: ((context, index) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5)),
+                                return GestureDetector(
+                                  onTap: (() async {
+                                    final _text =
+                                        'tel:${data.docs[index]['contactNumber']}';
+                                    if (await canLaunch(_text)) {
+                                      await launch(_text);
+                                    }
+                                  }),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(5),
+                                              topRight: Radius.circular(5)),
+                                        ),
+                                        height: 110,
+                                        width: 150,
+                                        child: imageOnline(
+                                            data.docs[index]['picture'],
+                                            50,
+                                            50,
+                                            const EdgeInsets.fromLTRB(
+                                                20, 15, 20, 15),
+                                            ''),
                                       ),
-                                      height: 110,
-                                      width: 150,
-                                      child: imageOnline(
-                                          data.docs[index]['picture'],
-                                          50,
-                                          50,
-                                          const EdgeInsets.fromLTRB(
-                                              20, 15, 20, 15),
-                                          ''),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(5),
-                                            bottomRight: Radius.circular(5)),
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5),
+                                              bottomRight: Radius.circular(5)),
+                                        ),
+                                        height: 60,
+                                        width: 150,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            text(data.docs[index]['job'], 16,
+                                                Colors.white),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            text(data.docs[index]['name'], 14,
+                                                Colors.white),
+                                            text(
+                                                data.docs[index]
+                                                    ['contactNumber'],
+                                                10,
+                                                Colors.white),
+                                          ],
+                                        ),
                                       ),
-                                      height: 60,
-                                      width: 150,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          text(data.docs[index]['job'], 16,
-                                              Colors.white),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          text(data.docs[index]['name'], 14,
-                                              Colors.white),
-                                          text(
-                                              data.docs[index]['contactNumber'],
-                                              10,
-                                              Colors.white),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 );
                               }),
                               gridDelegate:

@@ -334,7 +334,7 @@ class _FarmPageState extends State<FarmPage> {
                                             bottomLeft: Radius.circular(5),
                                             bottomRight: Radius.circular(5)),
                                       ),
-                                      height: 70,
+                                      height: 80,
                                       width: 150,
                                       child: Column(
                                         mainAxisAlignment:
@@ -348,7 +348,7 @@ class _FarmPageState extends State<FarmPage> {
                                               12,
                                               Colors.white),
                                           const SizedBox(
-                                            height: 10,
+                                            height: 5,
                                           ),
                                           text(data.docs[index]['name'], 14,
                                               Colors.white),

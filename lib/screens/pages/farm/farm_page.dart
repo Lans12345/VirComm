@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:new_app/screens/pages/farm/specific_widgets/crop_webview.dart';
 import 'package:new_app/screens/pages/farm/specific_widgets/crop_widget.dart';
 import 'package:new_app/services/cloud_function/postProduct.dart';
-import 'package:new_app/widgets/image.dart';
 import 'package:new_app/widgets/text.dart';
 import 'package:get/get.dart';
 
@@ -311,21 +310,18 @@ class _FarmPageState extends State<FarmPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(data.docs[index]
+                                                ['productPicture'])),
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.only(
+                                        borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(5),
                                             topRight: Radius.circular(5)),
                                       ),
                                       height: 100,
                                       width: 150,
-                                      child: imageOnline(
-                                          data.docs[index]['productPicture'],
-                                          50,
-                                          50,
-                                          const EdgeInsets.fromLTRB(
-                                              20, 15, 20, 15),
-                                          ''),
                                     ),
                                     Container(
                                       decoration: const BoxDecoration(

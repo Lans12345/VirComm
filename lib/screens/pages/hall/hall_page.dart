@@ -678,35 +678,45 @@ class _FarmPageState extends State<HallPage> {
                                         ),
                                         height: 250,
                                         width: 300,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  text(data.docs[index]['time'],
-                                                      16, Colors.white),
-                                                ],
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 20,
+                                                    left: 20,
+                                                    top: 10),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    text(
+                                                        data.docs[index]
+                                                            ['time'],
+                                                        14,
+                                                        Colors.white),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 50,
-                                            ),
-                                            Center(
-                                              child: SizedBox(
-                                                width: 220,
-                                                child: text(
-                                                    data.docs[index]['details'],
-                                                    16,
-                                                    Colors.white),
+                                              const SizedBox(
+                                                height: 30,
                                               ),
-                                            ),
-                                          ],
+                                              Center(
+                                                child: SizedBox(
+                                                  width: 300,
+                                                  child: text(
+                                                      data.docs[index]
+                                                          ['details'],
+                                                      12,
+                                                      Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
@@ -912,21 +922,18 @@ class _FarmPageState extends State<HallPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  data.docs[index]['picture'])),
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(5),
                                               topRight: Radius.circular(5)),
                                         ),
                                         height: 110,
                                         width: 150,
-                                        child: imageOnline(
-                                            data.docs[index]['picture'],
-                                            50,
-                                            50,
-                                            const EdgeInsets.fromLTRB(
-                                                20, 15, 20, 15),
-                                            ''),
                                       ),
                                       Container(
                                         decoration: const BoxDecoration(
@@ -949,8 +956,7 @@ class _FarmPageState extends State<HallPage> {
                                             text(data.docs[index]['name'], 14,
                                                 Colors.white),
                                             text(
-                                                data.docs[index]
-                                                    ['contactNumber'],
+                                                '09${data.docs[index]['contactNumber']}',
                                                 10,
                                                 Colors.white),
                                           ],
@@ -1203,6 +1209,7 @@ class _FarmPageState extends State<HallPage> {
                               itemBuilder: ((context, index) {
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       decoration: const BoxDecoration(
@@ -1214,8 +1221,24 @@ class _FarmPageState extends State<HallPage> {
                                       height: 110,
                                       width: 150,
                                       child: Center(
-                                        child: text(data.docs[index]['job'], 16,
-                                            Colors.amber),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            text('Looking for:', 10,
+                                                Colors.amber),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15, right: 15),
+                                              child: text(
+                                                  data.docs[index]['job'],
+                                                  18,
+                                                  Colors.amber),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     Container(
@@ -1237,7 +1260,7 @@ class _FarmPageState extends State<HallPage> {
                                             height: 10,
                                           ),
                                           text(
-                                              data.docs[index]['contactNumber'],
+                                              '09${data.docs[index]['contactNumber']}',
                                               12,
                                               Colors.white),
                                         ],

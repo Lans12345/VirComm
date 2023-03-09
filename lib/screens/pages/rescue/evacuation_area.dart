@@ -1,57 +1,41 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../plugins/geolocator.dart';
-
 class MapSample extends StatefulWidget {
+  const MapSample({Key? key}) : super(key: key);
+
   @override
   State<MapSample> createState() => MapSampleState();
 }
-
-late double lat;
-late double long;
 
 class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     super.initState();
-    permission();
-    getLocation();
+
     marker1();
     marker2();
     marker3();
   }
 
-  getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    setState(() {
-      lat = position.latitude;
-      long = position.longitude;
-    });
-    print('lat - $lat');
-    print('long - $long');
-  }
-
   final Completer<GoogleMapController> _controller = Completer();
-  static CameraPosition myLocation = CameraPosition(
-    target: LatLng(lat, long),
+  static CameraPosition myLocation = const CameraPosition(
+    target: LatLng(8.481828, 124.646717),
     zoom: 16,
   );
 
   Set<Marker> markers = {};
 
   marker1() async {
-    Marker mark1 = Marker(
-        markerId: const MarkerId('mark1'),
-        infoWindow: const InfoWindow(
+    Marker mark1 = const Marker(
+        markerId: MarkerId('mark1'),
+        infoWindow: InfoWindow(
           title: 'Your Location',
         ),
         icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(lat, long));
+        position: LatLng(8.481828, 124.646717));
 
     setState(() {
       markers.add(mark1);
@@ -65,7 +49,7 @@ class MapSampleState extends State<MapSample> {
           title: 'Evacuation Area 1',
         ),
         icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(8.311283, 125.004636));
+        position: LatLng(8.484829, 124.647908));
 
     setState(() {
       markers.add(mark2);
@@ -79,7 +63,7 @@ class MapSampleState extends State<MapSample> {
           title: 'Evacuation Area 2',
         ),
         icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(8.311788, 125.005656));
+        position: LatLng(8.481426, 124.646726));
 
     setState(() {
       markers.add(mark3);

@@ -47,7 +47,7 @@ dependencies:
   url_launcher:
   tflite:
   google_maps_flutter:
-  geolocator: ^8.2.0
+  # geolocator: ^8.2.0
   introduction_screen:
   telephony:
   firebase_auth_web:

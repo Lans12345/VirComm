@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/screens/home.dart';
+import 'package:new_app/screens/new_home.dart';
 
 class LoadingScreenToHome extends StatefulWidget {
+  const LoadingScreenToHome({Key? key}) : super(key: key);
+
   @override
   _ScreenState createState() => _ScreenState();
 }
@@ -14,7 +16,7 @@ class _ScreenState extends State<LoadingScreenToHome> {
     // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 5), () async {
-      Get.off(() => const Home());
+      Get.off(() => NewHome());
     });
   }
 
